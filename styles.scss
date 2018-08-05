@@ -1,3 +1,13 @@
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/_mixins";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/_forms";
+@import "~bootstrap/scss/_custom-forms";
+@import "~bootstrap/scss/_input-group";
+@import "~bootstrap/scss/_dropdown";
+
 .jsonform-container {
   padding: 1rem 1rem;
   .jsonform-required>label:after {
