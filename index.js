@@ -3,8 +3,8 @@ import 'bootstrap/js/dist/dropdown';
 
 var requiredValues = []
 
-var initForm = function (selector, schema) {
-
+export function initForm(schema) {
+  schema = typeof schema === 'string' ? JSON.parse(schema) : schema
   schema.onSubmit = function (error, values) {
 
     console.log("value submitted - ")
@@ -13,7 +13,7 @@ var initForm = function (selector, schema) {
     if (error) {
       console.error(error)
       if (window.ExternalHandler) {
-        window.ExternalHandler.onSubmitted(error, values)
+        window.ExternalHandler.onSubmitted(JSON.stringify(error), null)
       }
       return;
     }
@@ -30,7 +30,7 @@ var initForm = function (selector, schema) {
     }
     if (emptyKeys.length === 0) {
       if (window.ExternalHandler) {
-        window.ExternalHandler.onSubmitted(null, values)
+        window.ExternalHandler.onSubmitted(null, JSON.stringify(values))
       }
     } else {
       const err = {
@@ -41,7 +41,7 @@ var initForm = function (selector, schema) {
         })
       }
       console.error(err)
-      window.ExternalHandler.onSubmitted(err, values)
+      window.ExternalHandler.onSubmitted(JSON.stringify(err), JSON.stringify(values))
     }
   }
 
@@ -54,13 +54,16 @@ var initForm = function (selector, schema) {
 
   console.log(requiredValues)
 
-  $(selector).html("");
-  $(selector).jsonForm(schema)
+  $("form.jsonform-container").html("");
+  $("form.jsonform-container").jsonForm(schema)
 }
 
-var submit = function () {
+export function submit() {
   $('form.jsonform-container').submit(function (event) {
     event.preventDefault();
     console.log(event)
   })
 }
+
+window.initForm = initForm
+window.submit = submit
