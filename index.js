@@ -48,7 +48,11 @@ export function initForm(schema) {
   requiredValues = []
   for (const key of Object.keys(schema.schema)) {
     if (schema.schema[key].required === true) {
-      requiredValues.push(key)
+      if (schema.form) {
+        if (schema.form.find(f => f.key === key) != null) {
+          requiredValues.push(key)
+        }
+      } else requiredValues.push(key)
     }
   }
 
